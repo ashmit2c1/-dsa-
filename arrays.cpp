@@ -258,6 +258,108 @@ int longestSequenceOfone(vector<int>&v){
     }
     return one_streak;
 }
+//==================================//
+//FIND THE SUM OF THE LARGEST AND SECOND LARGEST IN ARRAY, THE ARRAY CAN HAVE DUPLICATES AS WELL//
+//==================================//
+int largestSecondLargest(vector<int>&v){
+    int n = v.size();
+    int max1=INT_MIN;
+    int max2=INT_MIN;
+    for(int i = 0; i<n ; i++){
+        if(v[i]>max1){
+            max1=v[i];
+        }
+    }
+    for(int i = 0; i<n ; i++){
+        if(v[i]>max2 && v[i]!=max1){
+            max2=v[i];
+        }
+    }
+    return max1+max2;
+}
+//==================================//
+//FIND THE SUB ARRAY WITH THE MAXSUM//
+//==================================//
+int maxSumSubArray(vector<int>&v,int k){
+    int n = v.size();
+    int sum=0;
+    int maxSum=0;
+    for(int i = 0; i<k ; i++){
+        sum=sum+v[i];
+    }
+    maxSum=sum;
+    for(int i =k;i<n;i++){
+        sum=sum+v[i]-v[i-k];
+        maxSum=max(maxSum,sum);
+    }
+    return maxSum;
+}
+//==================================//
+//FIND THE INDEX OF THE SUB ARRAY WITH THE GIVEN SUM//
+//==================================//
+vector<int> findIndex(vector<int>&v,int s){
+    int n = v.size();
+    int sum = 0;
+    int start = 0;
+    int end = 0;
+    vector<int> ans;
+    for(int i = 0; i<n ; i++){
+        sum=sum+v[i];
+        if(sum>=s){
+            end=i;
+            while(sum>s && end>start){
+                sum=sum-v[start];
+                start++;
+            }
+        }
+        if(sum==s){
+            ans.push_back(start+1);
+            ans.push_back(end+1);
+            return ans;
+        }
+    }
+    ans.push_back(-1);
+    return ans;
+}
+//==================================//
+//FIND THE MINIMUM NUMBER OF OPERATIONS REQUIRED TO MAKE ALL THE ELEMENTS IN ARRAY EQUAL//
+//==================================//
+int minOps(vector<int>&v){
+    int n = v.size();
+    int occ=0;
+    int maxOcc=0;
+    sort(v.begin(),v.end());
+    for(int i = 0; i<n ; i++){
+        if(v[i]==v[i+1]){
+            occ++;
+            maxOcc=max(maxOcc,occ);
+        }
+        else{
+            occ=1;
+        }
+    }
+    int minOps=n-maxOcc;
+    return minOps;
+}
+//==================================//
+//FIND THE MAJORITY ELEMENT IN ARRAY//
+//==================================//
+int findMajElement(vector<int>&v){
+    int n = v.size();
+    int majEl = -1;
+    int count=0;
+    for(int i = 0; i<n ; i++){
+        for(int j = 0;j<n;j++){
+            if(v[i]==v[j]){
+                count++;
+            }
+            if(count>n/2){
+                majEl=v[i];
+            }
+        }
+    }
+    return majEl;
+}
 int main(){
     
 }
